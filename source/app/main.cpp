@@ -75,7 +75,7 @@ auto to_utf8( const wstring_view& ws )
 
 namespace app {
 
-    class Resource_module
+    class Resource_module: No_copying_or_moving
     {
         HMODULE     m_handle;
         
