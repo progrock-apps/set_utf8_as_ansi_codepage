@@ -10,15 +10,13 @@ static_assert( IS_WIDE_WINAPI(), IS_WIDE_WINAPI_TEXT() );
 #include <stddef.h>                 // size_t
 #include <stdio.h>                  // stderr, fprintf, printf
 
-#include <exception>
 #include <iterator>
 #include <optional>
 #include <stdexcept>
 #include <string>
 #include <string_view>
 #include <vector>
-using   std::uncaught_exceptions,               // <exception>
-        std::size,                              // <iterator>
+using   std::size,                              // <iterator>
         std::optional,                          // <optional>
         std::runtime_error,                     // <stdexcept>
         std::string,                            // <string>
@@ -74,7 +72,6 @@ auto to_utf8( const wstring_view& ws )
 }
 
 namespace app {
-
     class Resource_module: No_copying_or_moving
     {
         HMODULE     m_handle;
@@ -100,7 +97,7 @@ namespace app {
             hopefully( data_handle != 0 )
                 or FAIL( "Windows’ LoadResource failed (after FindResource succeeded)" );
             const DWORD n_bytes = ::SizeofResource( m_handle, res_handle );
-            hopefully( data_handle != 0 )
+            hopefully( n_bytes != 0 )
                 or FAIL( "Windows’ SizeofResource failed (after FindResource and LoadResource succeeded)" );
             const T_<void*> p_data = ::LockResource( data_handle );
             hopefully( p_data != nullptr )
